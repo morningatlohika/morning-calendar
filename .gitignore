@@ -1,0 +1,12 @@
+.gradle/
+build/
+*.jar
+.gradletasknamecache
+
+out/
+.idea/
+*.iml
+
+
+tokens/
+credentials.json
