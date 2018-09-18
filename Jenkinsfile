@@ -52,7 +52,7 @@ pipeline() {
     stage('Build') {
       steps {
         script {
-          info = gradle.run rootDir: "./", buildFile: 'build.gradle.kts', tasks: 'clean build'
+          info = gradle.run rootDir: "./", buildFile: 'build.gradle', tasks: 'clean build'
           buildInfo.append(info)
         }
       }
@@ -66,7 +66,7 @@ pipeline() {
       steps {
         script {
           gradle.deployer server: server, repo: 'morning-at-lohika-snapshots'
-          info = gradle.run rootDir: "./", buildFile: 'build.gradle.kts', tasks: 'artifactoryPublish'
+          info = gradle.run rootDir: "./", buildFile: 'build.gradle', tasks: 'artifactoryPublish'
           buildInfo.append(info)
         }
       }
@@ -96,7 +96,7 @@ pipeline() {
       }
       steps {
         script {
-          info = gradle.run rootDir: "./", buildFile: 'build.gradle.kts', tasks: 'release'
+          info = gradle.run rootDir: "./", buildFile: 'build.gradle', tasks: 'release'
           buildInfo.append(info)
         }
       }
@@ -113,7 +113,7 @@ pipeline() {
             sh 'git log --pretty=format:"%h" -n 2 | sed -n 2p | xargs git checkout'
           }
           gradle.deployer server: server, repo: 'morning-at-lohika'
-          info = gradle.run rootDir: "./", buildFile: 'build.gradle.kts', tasks: 'clean build artifactoryPublish'
+          info = gradle.run rootDir: "./", buildFile: 'build.gradle', tasks: 'clean build artifactoryPublish'
           buildInfo.append(info)
         }
       }
