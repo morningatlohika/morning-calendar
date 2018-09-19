@@ -58,7 +58,7 @@ pipeline() {
       }
     }
 
-    stage('Package and publish release') {
+    stage('Publish SNAPSHOT') {
       when {
         branch 'master'
         expression { params.release == false }
@@ -102,7 +102,7 @@ pipeline() {
       }
     }
 
-    stage('Publish RELEASE') {
+    stage('Package and publish release') {
       when {
         branch 'master'
         expression { params.release == true }
