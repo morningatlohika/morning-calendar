@@ -12,6 +12,7 @@ buildscript {
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     classpath "io.franzbecker:gradle-lombok:1.14"
+    classpath 'net.researchgate:gradle-release:2.6.0'
   }
 }
 
@@ -20,6 +21,7 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: "io.franzbecker.gradle-lombok"
+apply plugin: 'net.researchgate.release'
 
 
 group = 'com.lohika.morning'
