@@ -24,6 +24,6 @@ public class WatchdogService {
   public void daily() throws GeneralSecurityException, IOException {
     log.info("Daily watchdog");
     List<Event> events = calendarService.getEvents(1);
-    slackNotificationService.send("Дні народження сьогодні:", events);
+    slackNotificationService.send("Events:", events);
   }
 }

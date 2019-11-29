@@ -11,8 +11,8 @@ buildscript {
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    classpath "io.franzbecker:gradle-lombok:1.14"
     classpath 'net.researchgate:gradle-release:2.6.0'
+    classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.8"
   }
 }
 
@@ -20,18 +20,29 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: "io.franzbecker.gradle-lombok"
 apply plugin: 'net.researchgate.release'
 
+apply plugin: "org.sonarqube"
 
 group = 'com.lohika.morning'
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
   mavenCentral()
 }
 
 dependencies {
+  compileOnly 'org.projectlombok:lombok:1.18.10'
+  annotationProcessor 'org.projectlombok:lombok:1.18.10'
+
+  testAnnotationProcessor 'org.projectlombok:lombok:1.18.10'
+  testCompileOnly 'org.projectlombok:lombok:1.18.10'
+
+  // JAX-B dependencies for JDK 9+
+  implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+  implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
+
   compile('org.springframework.boot:spring-boot-starter-web')
   compile 'com.google.api-client:google-api-client:1.23.0'
   compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
@@ -40,10 +51,7 @@ dependencies {
   compile group: 'commons-httpclient', name: 'commons-httpclient', version: '3.1'
   compile group: 'org.json', name: 'json', version: '20180813'
 
-  compileOnly('org.projectlombok:lombok:1.16.20')
-
   annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
   testCompile('org.springframework.boot:spring-boot-starter-test')
-  testCompileOnly('org.projectlombok:lombok')
 }

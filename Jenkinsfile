@@ -22,6 +22,10 @@ pipeline() {
     SLACK_AUTOMATION_TOKEN = credentials("jenkins-ci-integration-token")
     JENKINS_HOOKS = credentials("morning-at-lohika-jenkins-ci-hooks")
     GIT_TOKEN = credentials("Jenkins-GitHub-Apps-Personal-access-tokens")
+
+    SONAR_PROJECT_KEY = "morning-calendar"
+    SONAR_HOST_URL = credentials("sonar-host-url")
+    SONAR_LOGIN = credentials("sonar-login")
   }
 
   parameters {
@@ -54,6 +58,14 @@ pipeline() {
         script {
           info = gradle.run rootDir: "./", buildFile: 'build.gradle', tasks: 'clean build'
           buildInfo.append(info)
+        }
+      }
+    }
+
+    stage('Sonarqube') {
+      steps {
+        script {
+          sh "gradle sonarqube -x test -Dsonar.projectKey=${env.SONAR_PROJECT_KEY} -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_LOGIN}"
         }
       }
     }
